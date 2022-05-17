@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MVP.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="subway-use-and-covid-rates">Subway Use and Covid Rates</h1>
+<h2 id="background">Background</h2>
+<h3 id="case"><strong>Case</strong></h3>
+<ul>
+<li>The NYC Health Department wishes to validate the effectiviness of Covid related guidance in regards to Subway usage.</li>
+</ul>
+<h3 id="methodolgy"><strong>Methodolgy</strong></h3>
+<ul>
+<li>Data used included <a href="http://web.mta.info/developers/turnstile.html">MTA Turnstile Data</a> and <a href="https://data.cityofnewyork.us/Health/COVID-19-Daily-Counts-of-Cases-Hospitalizations-an/rc75-m7u3">Daily Covid 19 Data for NYC</a>. SqlAlchemy and Pandas were used for importing the datasets.</li>
+<li>Subway entries, exits, and line density<sup><strong><a href="##" title="= (Station Entries + Station Exits) / # of Lines">*</a></strong></sup> were calculated for station and day between January 2020 and April 2022. Subway data was then merged with Covid data.</li>
+<li>Correlations were calculated for subway and covid metrics. Visualizations comparing subway usage and covid rates were developed using Matplotlib and Plotly.
+<br>
+<br></li>
+</ul>
+<hr>
+<h2 id="results">Results</h2>
+<h3 id="conclusions"><strong>Conclusions</strong></h3>
+<ul>
+<li>
+<p>Subway use drastically declined as the pandemic startd and NYC went into lockdown. Generally, subway use has consitently been rising since May 2020.</p>
+</li>
+<li>
+<p>Subway use was indeed negatively related to Covid Rates. As Covid spiked people used the subway less.</p>
+</li>
+<li>
+<p>There is a strong seasonality componenent wihtin subway use between Weekdays and Weekends. Weekend subway use is more strongly related with Covid Rates than Weekdays.</p>
+</li>
+</ul>
+<h3 id="tables"><strong>Tables</strong></h3>
+  <center> Correlations Between Subway Use and Covid 19 Rates </center>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">Cases</th>
+<th style="text-align:right">Hosp<sup><strong><a href="##" title="Hospitalizations">*</a></sup></strong></th>
+<th style="text-align:right">Deaths</th>
+<th style="text-align:right">Weekly Cases</th>
+<th style="text-align:right">All<sup><strong><a href="##" title="Including unconfirmed cases">*</a></sup></strong> Weekly Cases</th>
+<th style="text-align:right">Weekly  Hosp<sup><strong><a href="##" title="Hospitalizations">*</a></sup></strong></th>
+<th style="text-align:right">Weekly Deaths</th>
+<th style="text-align:right">All<sup><strong><a href="##" title="Including unconfirmed cases">*</a></sup></strong> Weekly Deaths</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Entries</td>
+<td style="text-align:right">0.019</td>
+<td style="text-align:right">-0.287</td>
+<td style="text-align:right">-0.392</td>
+<td style="text-align:right">-0.055</td>
+<td style="text-align:right">-0.049</td>
+<td style="text-align:right">-0.332</td>
+<td style="text-align:right">-0.399</td>
+<td style="text-align:right">-0.388</td>
+</tr>
+<tr>
+<td style="text-align:left">Exits</td>
+<td style="text-align:right">0.052</td>
+<td style="text-align:right">-0.305</td>
+<td style="text-align:right">-0.414</td>
+<td style="text-align:right">-0.013</td>
+<td style="text-align:right">-0.006</td>
+<td style="text-align:right">-0.342</td>
+<td style="text-align:right">-0.418</td>
+<td style="text-align:right">-0.409</td>
+</tr>
+<tr>
+<td style="text-align:left">Density</td>
+<td style="text-align:right">0.035</td>
+<td style="text-align:right">-0.299</td>
+<td style="text-align:right">-0.408</td>
+<td style="text-align:right">-0.037</td>
+<td style="text-align:right">-0.03</td>
+<td style="text-align:right">-0.341</td>
+<td style="text-align:right">-0.414</td>
+<td style="text-align:right">-0.404</td>
+</tr>
+</tbody>
+</table>
+<details>
+    <summary>Full Correlation Table</summary>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right">Cases</th>
+<th style="text-align:right">Hosp<sup><strong><a href="##" title="Hospitalizations">*</a></sup></strong></th>
+<th style="text-align:right">Deaths</th>
+<th style="text-align:right">Weekly Cases</th>
+<th style="text-align:right">All<sup><strong><a href="##" title="Including unconfirmed cases">*</a></sup></strong> Weekly Cases</th>
+<th style="text-align:right">Weekly  Hosp<sup><strong><a href="##" title="Hospitalizations">*</a></sup></strong></th>
+<th style="text-align:right">Weekly Deaths</th>
+<th style="text-align:right">All<sup><strong><a href="##" title="Including unconfirmed cases">*</a></sup></strong> Weekly Deaths</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Daily</td>
+<td style="text-align:left">Entries</td>
+<td style="text-align:right">0.019</td>
+<td style="text-align:right">-0.287</td>
+<td style="text-align:right">-0.392</td>
+<td style="text-align:right">-0.055</td>
+<td style="text-align:right">-0.049</td>
+<td style="text-align:right">-0.332</td>
+<td style="text-align:right">-0.399</td>
+<td style="text-align:right">-0.388</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Exits</td>
+<td style="text-align:right">0.052</td>
+<td style="text-align:right">-0.305</td>
+<td style="text-align:right">-0.414</td>
+<td style="text-align:right">-0.013</td>
+<td style="text-align:right">-0.006</td>
+<td style="text-align:right">-0.342</td>
+<td style="text-align:right">-0.418</td>
+<td style="text-align:right">-0.409</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Density</td>
+<td style="text-align:right">0.035</td>
+<td style="text-align:right">-0.299</td>
+<td style="text-align:right">-0.408</td>
+<td style="text-align:right">-0.037</td>
+<td style="text-align:right">-0.03</td>
+<td style="text-align:right">-0.341</td>
+<td style="text-align:right">-0.414</td>
+<td style="text-align:right">-0.404</td>
+</tr>
+<tr>
+<td style="text-align:left">Weekdays</td>
+<td style="text-align:left">Entries</td>
+<td style="text-align:right">-0.028</td>
+<td style="text-align:right">-0.357</td>
+<td style="text-align:right">-0.458</td>
+<td style="text-align:right">-0.056</td>
+<td style="text-align:right">-0.048</td>
+<td style="text-align:right">-0.382</td>
+<td style="text-align:right">-0.463</td>
+<td style="text-align:right">-0.451</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Exits</td>
+<td style="text-align:right">0.017</td>
+<td style="text-align:right">-0.361</td>
+<td style="text-align:right">-0.463</td>
+<td style="text-align:right">-0.007</td>
+<td style="text-align:right">0.001</td>
+<td style="text-align:right">-0.378</td>
+<td style="text-align:right">-0.466</td>
+<td style="text-align:right">-0.456</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Density</td>
+<td style="text-align:right">-0.009</td>
+<td style="text-align:right">-0.37</td>
+<td style="text-align:right">-0.474</td>
+<td style="text-align:right">-0.034</td>
+<td style="text-align:right">-0.027</td>
+<td style="text-align:right">-0.391</td>
+<td style="text-align:right">-0.478</td>
+<td style="text-align:right">-0.467</td>
+</tr>
+<tr>
+<td style="text-align:left">Weekends</td>
+<td style="text-align:left">Entries</td>
+<td style="text-align:right">-0.088</td>
+<td style="text-align:right">-0.382</td>
+<td style="text-align:right">-0.481</td>
+<td style="text-align:right">-0.11</td>
+<td style="text-align:right">-0.101</td>
+<td style="text-align:right">-0.421</td>
+<td style="text-align:right">-0.488</td>
+<td style="text-align:right">-0.473</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Exits</td>
+<td style="text-align:right">-0.036</td>
+<td style="text-align:right">-0.368</td>
+<td style="text-align:right">-0.468</td>
+<td style="text-align:right">-0.046</td>
+<td style="text-align:right">-0.037</td>
+<td style="text-align:right">-0.397</td>
+<td style="text-align:right">-0.472</td>
+<td style="text-align:right">-0.459</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Density</td>
+<td style="text-align:right">-0.067</td>
+<td style="text-align:right">-0.39</td>
+<td style="text-align:right">-0.492</td>
+<td style="text-align:right">-0.082</td>
+<td style="text-align:right">-0.073</td>
+<td style="text-align:right">-0.424</td>
+<td style="text-align:right">-0.497</td>
+<td style="text-align:right">-0.483</td>
+</tr>
+</tbody>
+</table>
+</details>
+<h3 id="visualizations"><strong>Visualizations</strong></h3>
+<center> Day of Week and Subway Use </center>
+<p><img src="./images/exits_by_day_of_week.png" alt="Day of Week and Subway Use" title="Day of Week and Subway Use"></p>
+<center> Weekly Hospitalizations and Subway Use </center>
+<p><img src="./images/density_7day_hospitalized_time_of_week.png" alt="Weekly Hospitalizations and Subway Use" title="Weekly Hospitalizations and Subway Use"></p>
+
+</body>
+</html>
