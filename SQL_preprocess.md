@@ -1,4 +1,0 @@
-~~~~SQL
-SELECT * , max(ENTRIES) - min(ENTRIES) as ENTRY_COUNT, max(EXITS) - min(EXITS) as EXIT_COUNT FROM mta_data
-WHERE STATION = 'WHITEHALL S-FRY' AND [C/A] = 'A058' AND SCP = '01-00-00'
-~~~~
